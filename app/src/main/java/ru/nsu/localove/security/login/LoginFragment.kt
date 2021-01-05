@@ -30,5 +30,10 @@ class LoginFragment : Fragment() {
             val action = LoginFragmentDirections.actionLoginFragmentToPasswordRestoreFragment()
             findNavController().navigate(action)
         }
+
+        binding.signInButton.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToBottomNavActivity()
+            findNavController().navigate(action)
+        }
     }
 }

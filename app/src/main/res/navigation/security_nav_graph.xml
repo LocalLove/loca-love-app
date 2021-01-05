@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_passwordRestoreFragment"
             app:destination="@id/passwordRestoreFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_bottomNavActivity"
+            app:destination="@id/bottomNavActivity" />
     </fragment>
     <fragment
         android:id="@+id/registrationFirst"
@@ -34,4 +37,8 @@
         android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"
         android:label="fragment_password_restore"
         tools:layout="@layout/fragment_password_restore" />
+    <activity
+        android:id="@+id/bottomNavActivity"
+        android:name="ru.nsu.localove.core.BottomNavActivity"
+        android:label="BottomNavActivity" />
 </navigation>
