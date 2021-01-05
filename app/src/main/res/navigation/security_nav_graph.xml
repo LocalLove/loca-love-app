@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/security_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ru.nsu.localove.security.login.LoginFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFirst"
+            app:destination="@id/registrationFirst" />
+        <action
+            android:id="@+id/action_loginFragment_to_passwordRestoreFragment"
+            app:destination="@id/passwordRestoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFirst"
+        android:name="ru.nsu.localove.security.registration.RegistrationFirst"
+        android:label="RegistrationFirst" >
+        <action
+            android:id="@+id/action_registrationFirst_to_registrationSecond"
+            app:destination="@id/registrationSecond" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationSecond"
+        android:name="ru.nsu.localove.security.registration.RegistrationSecond"
+        android:label="RegistrationSecond" />
+    <fragment
+        android:id="@+id/passwordRestoreFragment"
+        android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"
+        android:label="fragment_password_restore"
+        tools:layout="@layout/fragment_password_restore" />
+</navigation>
