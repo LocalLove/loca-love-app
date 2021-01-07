@@ -3,9 +3,11 @@ package ru.nsu.localove.security.registration
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.nsu.localove.api.ApiClient
 
 class RegistrationViewModel @ViewModelInject constructor(
-    private val repository: RegistrationRepository
+    private val repository: RegistrationRepository,
+    private val apiClient: ApiClient
 ) : ViewModel() {
     val readyToRegister = MutableLiveData<Boolean>().apply {
         value = false
