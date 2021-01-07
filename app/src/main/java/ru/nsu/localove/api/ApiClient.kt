@@ -51,14 +51,14 @@ class ApiClient(
     private fun deserializeEmptyHttpResponse(status: Int, body: String): UnitHttpResponse? =
             when(status) {
                 200 -> UnitHttpResponse.Success
-                400 -> UnitHttpResponse.Conflict(mapper.readValue(body))
+                400 -> UnitHttpResponse.Error(mapper.readValue(body))
                 else -> null
             }
 
     inline fun <reified T> deserializeHttpResponse(status: Int, body: String): HttpResponse<T>? =
             when(status) {
                 200 -> HttpResponse.Success(mapper.readValue(body))
-                400 -> HttpResponse.Conflict(mapper.readValue(body))
+                400 -> HttpResponse.Error(mapper.readValue(body))
                 else -> null
             }
 
