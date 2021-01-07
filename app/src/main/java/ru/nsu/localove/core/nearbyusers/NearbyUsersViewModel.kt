@@ -1,4 +1,4 @@
-package ru.nsu.localove.core.ui.nearbyusers
+package ru.nsu.localove.core.nearbyusers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
