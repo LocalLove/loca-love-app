@@ -1,4 +1,4 @@
-package ru.nsu.localove.core.ui.profile
+package ru.nsu.localove.core.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

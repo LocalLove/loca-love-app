@@ -1,4 +1,4 @@
-package ru.nsu.localove.core.ui.profile
+package ru.nsu.localove.core.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,7 +36,6 @@ class ProfileFragment : Fragment() {
         profileViewModel.userName.observe(viewLifecycleOwner, {
             binding.toolbar.title = it
         })
-
         binding.toolbarLayout.setupWithNavController(
             binding.toolbar,
             findNavController(),

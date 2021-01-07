@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_liked_users"
-        android:name="ru.nsu.localove.core.ui.likedusers.LikedUsersFragment"
+        android:name="ru.nsu.localove.core.likedusers.LikedUsersFragment"
         android:label="@string/title_liked_users"
         tools:layout="@layout/fragment_liked_users" />
 
     <fragment
         android:id="@+id/navigation_nearby_users"
-        android:name="ru.nsu.localove.core.ui.nearbyusers.NearbyUsersFragment"
+        android:name="ru.nsu.localove.core.nearbyusers.NearbyUsersFragment"
         android:label="@string/title_nearby_users"
         tools:layout="@layout/fragment_nearby_users" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="ru.nsu.localove.core.ui.profile.ProfileFragment"
+        android:name="ru.nsu.localove.core.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 </navigation>
