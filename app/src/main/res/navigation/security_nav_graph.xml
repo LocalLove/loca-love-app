@@ -28,7 +28,16 @@
         android:id="@+id/passwordRestoreFragment"
         android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"
         android:label="fragment_password_restore"
-        tools:layout="@layout/fragment_password_restore" />
+        tools:layout="@layout/fragment_password_restore" >
+        <action
+            android:id="@+id/action_passwordRestoreFragment_to_passwordRestoreFragment2"
+            app:destination="@id/mailSend" />
+    </fragment>
+    <fragment
+        android:id="@+id/mailSend"
+        android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"
+        android:label="fragment_password_restore_send_mail"
+        tools:layout="@layout/fragment_password_restore_send_mail" />
     <activity
         android:id="@+id/bottomNavActivity"
         android:name="ru.nsu.localove.core.BottomNavActivity"
