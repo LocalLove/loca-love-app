@@ -1,13 +1,13 @@
-package ru.nsu.localove.core.ui.notifications
+package ru.nsu.localove.core.ui.nearbyusers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class NearbyUsersViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is Nearby users Fragment"
     }
     val text: LiveData<String> = _text
 }

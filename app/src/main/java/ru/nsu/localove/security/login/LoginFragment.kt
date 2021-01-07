@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import ru.nsu.localove.R
 import ru.nsu.localove.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
