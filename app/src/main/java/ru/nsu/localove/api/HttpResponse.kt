@@ -1,20 +1,16 @@
 package ru.nsu.localove.api
 
-/**
- * Содержит результат выполнения запроса к серверу
- * В соответствии с Описанием АПИ сервера, результатов,
- * пригодных для обработки на стороне клиента может быть два: Успешно и Конфликт
- * Если метод апи в случае успешного выполнения не возвращает тело, используйте [UnitHttpRes]
- */
-sealed class HttpRes<T> {
+import com.localove.api.ErrorDto
 
-    data class Success<T>(val data: T): HttpRes<T>()
+sealed class HttpResponse<T> {
 
-    data class Conflict<T>(val error: ErrorRes): HttpRes<T>()
+    data class Success<T>(val data: T): HttpResponse<T>()
+
+    data class Conflict<T>(val error: ErrorDto): HttpResponse<T>()
 
     fun <R> transform(
             onSuccess: (T) -> R,
-            onConflict: (ErrorRes) -> R
+            onConflict: (ErrorDto) -> R
     ): R = when(this) {
         is Success -> onSuccess(data)
         is Conflict -> onConflict(error)
@@ -23,15 +19,15 @@ sealed class HttpRes<T> {
 
 
 /**
- * Специализация [HttpRes] для пустого тела ответа
+ * Специализация [HttpResponse] для пустого тела ответа
  */
-sealed class UnitHttpRes {
-    object Success: UnitHttpRes()
-    data class Conflict(val error: ErrorRes): UnitHttpRes()
+sealed class UnitHttpResponse {
+    object Success: UnitHttpResponse()
+    data class Conflict(val error: ErrorDto): UnitHttpResponse()
 
     fun <R> transform(
             onSuccess: () -> R,
-            onConflict: (ErrorRes) -> R
+            onConflict: (ErrorDto) -> R
     ): R = when(this) {
         is Success -> onSuccess()
         is Conflict -> onConflict(error)

@@ -9,14 +9,15 @@ import io.ktor.client.features.json.*
 import io.ktor.util.*
 
 @KtorExperimentalAPI
-fun httpClient() = HttpClient(CIO){
+fun httpClient() = HttpClient(CIO) {
     install(JsonFeature){
         serializer = JacksonSerializer(JsonMapper.builder().findAndAddModules().build())
     }
     disableResponseValidation()
 }
 
-private fun HttpClientConfig<*>.disableResponseValidation(){
+private fun HttpClientConfig<*>.disableResponseValidation() {
     HttpResponseValidator {
-        validateResponse {  }
+        validateResponse { }
     }
+}
