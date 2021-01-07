@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/mailSend"
-        android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"
+        android:name="ru.nsu.localove.security.restore.PasswordRestoreSendMailFragment"
         android:label="fragment_password_restore_send_mail"
         tools:layout="@layout/fragment_password_restore_send_mail" />
     <activity
