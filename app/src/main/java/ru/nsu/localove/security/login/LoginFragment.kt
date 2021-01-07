@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import ru.nsu.localove.R
 import ru.nsu.localove.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var binding: FragmentLoginBinding
 
@@ -22,6 +26,19 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.loginTextEdit.addTextChangedListener {
+            loginViewModel.login = MutableLiveData(it.toString())
+        }
+
+        binding.passwordTextEdit.addTextChangedListener {
+            loginViewModel.password = MutableLiveData(it.toString())
+        }
+
+        binding.signInButton.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToBottomNavActivity()
+            findNavController().navigate(action)
+        }
+
         binding.signUpText.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFirst()
             findNavController().navigate(action)
@@ -29,11 +46,6 @@ class LoginFragment : Fragment() {
 
         binding.passwordRestoreText.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToPasswordRestoreFragment()
-            findNavController().navigate(action)
-        }
-
-        binding.signInButton.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToBottomNavActivity()
             findNavController().navigate(action)
         }
     }
