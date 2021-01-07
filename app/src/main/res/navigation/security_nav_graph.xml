@@ -22,16 +22,8 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFirst"
-        android:name="ru.nsu.localove.security.registration.RegistrationFirst"
-        android:label="RegistrationFirst" >
-        <action
-            android:id="@+id/action_registrationFirst_to_registrationSecond"
-            app:destination="@id/registrationSecond" />
-    </fragment>
-    <fragment
-        android:id="@+id/registrationSecond"
-        android:name="ru.nsu.localove.security.registration.RegistrationSecond"
-        android:label="RegistrationSecond" />
+        android:name="ru.nsu.localove.security.registration.RegistrationFragment"
+        android:label="RegistrationFirst" />
     <fragment
         android:id="@+id/passwordRestoreFragment"
         android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
     android:fitsSystemWindows="true"
-    tools:context=".core.ui.profile.ProfileFragment"
+    tools:context=".core.profile.ProfileFragment"
     tools:ignore="MergeRootFrame">
 
     <com.google.android.material.appbar.AppBarLayout

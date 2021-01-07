@@ -69,4 +69,7 @@ dependencies {
     // Navigation for Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // TODO: tmp
+    implementation(files("../libs/api-0.0.1.jar"))
 }
