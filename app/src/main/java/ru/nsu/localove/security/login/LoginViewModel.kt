@@ -1,15 +1,31 @@
 package ru.nsu.localove.security.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel @ViewModelInject constructor(
+    private val loginRepository: LoginRepository
+) : ViewModel() {
 
-    lateinit var login: LiveData<String>
+    val loginInfo: LoginInfo = LoginInfo()
 
-    lateinit var password: LiveData<String>
+    val loginState: MutableLiveData<LoginState?> = MutableLiveData()
 
-    fun signIn(): LoginState {
-        return LoginState.Success
+    fun signIn() {
+        val login = loginInfo.login
+        val password = loginInfo.password
+
+        if (login == null || password == null) {
+            loginState.value = LoginState.WrongCredentials
+            return
+        }
+
+        viewModelScope.launch {
+            loginRepository.signIn(login, password)
+        }
     }
 }
