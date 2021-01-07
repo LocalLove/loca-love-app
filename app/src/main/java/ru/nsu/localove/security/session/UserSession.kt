@@ -1,6 +1,8 @@
 package ru.nsu.localove.security.session
 
-class UserSession {
+import javax.inject.Inject
+
+class UserSession @Inject constructor() {
 
     private var accessToken: String? = null
 

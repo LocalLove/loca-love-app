@@ -8,15 +8,18 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.ContentType.Application.Json
+import io.ktor.util.*
+import ru.nsu.localove.security.session.UserSession
+import javax.inject.Inject
 import kotlin.text.Charsets.UTF_8
 
 const val AUTHORIZATION_HEADER = "Authorization"
 const val ACCESS_TOKEN_PREFIX = "Bearer "
 
-class ApiClient(
-        val http: HttpClient,
-        val baseUrl: String,
-        val tokenProvider: () -> String
+class ApiClient @KtorExperimentalAPI @Inject constructor(
+        val http: HttpClient = httpClient(),
+        val baseUrl: String = "localhost",
+        val userSession: UserSession
 ) {
 
     val mapper: JsonMapper = JsonMapper.builder().findAndAddModules().build()
@@ -73,7 +76,7 @@ class ApiClient(
             this.headers {
                 headers.forEach(this::append)
                 if (withAuth) {
-                    this.append(AUTHORIZATION_HEADER, ACCESS_TOKEN_PREFIX + tokenProvider())
+                    this.append(AUTHORIZATION_HEADER, ACCESS_TOKEN_PREFIX + userSession.accessToken())
                 }
             }
         }.execute()
