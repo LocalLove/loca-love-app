@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">LocaLove</string>
+    <string name="access_token_key">loca_love_access_token</string>
+    <string name="preference_file_key">token_storage</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
