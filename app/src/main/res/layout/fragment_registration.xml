@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/registrationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/security_labels_margin_top"
@@ -26,39 +26,41 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginEditText"
+            android:id="@+id/registrationLoginTextInputLayout"
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             app:boxBackgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/registrationLabel">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationLoginTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailEditText"
+            android:id="@+id/registrationEmailTextInputLayout"
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             app:boxBackgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginEditText">
+            app:layout_constraintTop_toBottomOf="@+id/registrationLoginTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationEmailTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTextEdit"
+            android:id="@+id/registrationPasswordTextInputLayout"
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -66,16 +68,17 @@
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailEditText">
+            app:layout_constraintTop_toBottomOf="@+id/registrationEmailTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationPasswordTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordConfirmationTextEdit"
+            android:id="@+id/registrationPasswordConfirmationTextInputLayout"
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -83,53 +86,55 @@
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextEdit">
+            app:layout_constraintTop_toBottomOf="@+id/registrationPasswordTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationPasswordConfirmationTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameEditText"
+            android:id="@+id/registrationNameTextInputLayout"
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             app:boxBackgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordConfirmationTextEdit">
+            app:layout_constraintTop_toBottomOf="@+id/registrationPasswordConfirmationTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationNameTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/birthDateEditTextLayout"
+            android:id="@+id/registrationBirthDateTextInputLayout"
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             app:boxBackgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameEditText">
+            app:layout_constraintTop_toBottomOf="@+id/registrationNameTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/birthDateEditText"
+                android:id="@+id/registrationBirthDateTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
-            android:id="@+id/genderRadioGroup"
+            android:id="@+id/registrationGenderRadioGroup"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/birthDateEditTextLayout"
+            app:layout_constraintTop_toBottomOf="@+id/registrationBirthDateTextInputLayout"
             android:checkedButton="@+id/radio_button_1"
             android:orientation="horizontal"
             android:layout_width="@dimen/input_default_width"
@@ -139,24 +144,27 @@
                 android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Male"/>
+                android:text="@string/genderMaleRadioButtonText"/>
             <RadioButton
                 android:id="@+id/radio_button_2"
                 android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Female"/>
+                android:text="@string/genderFemaleRadioButtonText"/>
         </RadioGroup>
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Register"
+            android:id="@+id/registrationSignUpButton"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/signUpButtonText"
+            android:backgroundTint="@color/teal_200"
+            app:cornerRadius="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/registrationGenderRadioGroup"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

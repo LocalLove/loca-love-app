@@ -17,33 +17,15 @@ class RegistrationViewModel @ViewModelInject constructor(
 
     val testHiltString = repository.testHiltString
 
-    fun onDataChanged(userInfo: UserInfo): RegistrationState {
-        var allFieldsFilled = true
-        val onNullCallback = {
-            allFieldsFilled = false
-        }
+    private var allFieldsFilled = false
 
+    fun onDataChanged(userInfo: UserInfo): RegistrationState {
+        allFieldsFilled = true
         return when {
-            !validateProperty(
-                userInfo.email,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.InvalidEmail
-            !validateProperty(
-                userInfo.login,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.InvalidLogin
-            !validateProperty(
-                userInfo.password,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.InvalidPassword
-            !validateProperty(
-                userInfo.passwordConfirmation,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.UnequalPasswords
+            !validateProperty(userInfo.email, { true }) -> RegistrationState.InvalidEmail
+            !validateProperty(userInfo.login, { true }) -> RegistrationState.InvalidLogin
+            !validateProperty(userInfo.password, { true }) -> RegistrationState.InvalidPassword
+            !validateProperty(userInfo.passwordConfirmation, { true }) -> RegistrationState.UnequalPasswords
             else -> RegistrationState.Valid
         }.also {
             readyToRegister.value = allFieldsFilled
@@ -54,13 +36,12 @@ class RegistrationViewModel @ViewModelInject constructor(
 
     private fun <T> validateProperty(
         property: T?,
-        validator: (T) -> Boolean,
-        onNullCallback: () -> Unit
+        validator: (T) -> Boolean
     ): Boolean {
         return property?.let {
             validator(it)
         } ?: let {
-            onNullCallback()
+            allFieldsFilled = false
             true
         }
     }

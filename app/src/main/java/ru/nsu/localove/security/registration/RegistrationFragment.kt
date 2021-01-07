@@ -22,7 +22,7 @@ class RegistrationFragment : Fragment() {
     ): View {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         registrationViewModel.testHiltString.observe(viewLifecycleOwner) {
-            binding.birthDateEditText.setText(it)
+            binding.registrationBirthDateTextInput.setText(it)
         }
         return binding.root
     }
