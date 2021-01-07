@@ -7,6 +7,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.util.*
+import javax.inject.Inject
 
 @KtorExperimentalAPI
 fun httpClient() = HttpClient(CIO) {
