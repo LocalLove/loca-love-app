@@ -7,42 +7,31 @@ import androidx.lifecycle.ViewModel
 class RegistrationViewModel @ViewModelInject constructor(
     private val repository: RegistrationRepository
 ) : ViewModel() {
-    val userInfo = MutableLiveData<UserInfo>().apply {
-        value = UserInfo()
-    }
-
     val readyToRegister = MutableLiveData<Boolean>().apply {
         value = false
     }
 
-    val testHiltString = repository.testHiltString
-
-    private var allFieldsFilled = false
-
     fun onDataChanged(userInfo: UserInfo): RegistrationState {
-        allFieldsFilled = true
+        var readyToRegisterLocal = false
         return when {
-            !validateProperty(userInfo.email, { true }) -> RegistrationState.InvalidEmail
-            !validateProperty(userInfo.login, { true }) -> RegistrationState.InvalidLogin
-            !validateProperty(userInfo.password, { true }) -> RegistrationState.InvalidPassword
-            !validateProperty(userInfo.passwordConfirmation, { true }) -> RegistrationState.UnequalPasswords
-            else -> RegistrationState.Valid
+            !validateEmail(userInfo.email) -> RegistrationState.InvalidEmail
+            !validateLogin(userInfo.login) -> RegistrationState.InvalidLogin
+            !validatePassword(userInfo.password) -> RegistrationState.InvalidPassword
+            !validateName(userInfo.name) -> RegistrationState.InvalidPassword
+            userInfo.password != userInfo.passwordConfirmation -> RegistrationState.UnequalPasswords
+            else -> {
+                readyToRegisterLocal = true
+                RegistrationState.Valid
+            }
         }.also {
-            readyToRegister.value = allFieldsFilled
+            readyToRegister.value = readyToRegisterLocal
         }
     }
 
     fun register(userInfo: UserInfo): RegistrationState = TODO()
 
-    private fun <T> validateProperty(
-        property: T?,
-        validator: (T) -> Boolean
-    ): Boolean {
-        return property?.let {
-            validator(it)
-        } ?: let {
-            allFieldsFilled = false
-            true
-        }
+    private fun UserInfo.isReadyToRegister(): Boolean {
+        return email != null && login != null && password != null
+                && name != null && gender != null && birthDate != null
     }
 }

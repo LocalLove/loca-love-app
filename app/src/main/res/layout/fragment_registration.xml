@@ -123,11 +123,31 @@
             app:layout_constraintTop_toBottomOf="@+id/registrationNameTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:focusable="false"
+                android:inputType="none"
                 android:id="@+id/registrationBirthDateTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <DatePicker-->
+
+<!--            android:id="@+id/registrationBirthDateTextInputLayout"-->
+<!--            android:layout_width="@dimen/input_default_width"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            app:boxBackgroundColor="@color/white"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/registrationNameTextInputLayout">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/registrationBirthDateTextInput"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+
+<!--        </DatePicker>-->
 
         <RadioGroup
             android:id="@+id/registrationGenderRadioGroup"
@@ -140,13 +160,13 @@
             android:layout_width="@dimen/input_default_width"
             android:layout_height="wrap_content">
             <RadioButton
-                android:id="@+id/radio_button_1"
+                android:id="@+id/registrationMaleRadioButton"
                 android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="@string/genderMaleRadioButtonText"/>
             <RadioButton
-                android:id="@+id/radio_button_2"
+                android:id="@+id/registrationFemaleRadioButton"
                 android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
