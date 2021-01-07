@@ -9,7 +9,7 @@ class LoginViewModel : ViewModel() {
 
     lateinit var password: LiveData<String>
 
-    fun signIn() {
-
+    fun signIn(): LoginState {
+        return LoginState.Success
     }
 }

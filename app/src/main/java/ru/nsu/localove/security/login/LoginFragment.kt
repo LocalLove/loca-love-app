@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,8 +37,15 @@ class LoginFragment : Fragment() {
         }
 
         binding.signInButton.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToBottomNavActivity()
-            findNavController().navigate(action)
+            when (loginViewModel.signIn()) {
+                is LoginState.Success -> {
+                    val action = LoginFragmentDirections.actionLoginFragmentToBottomNavActivity()
+                    findNavController().navigate(action)
+                }
+                is LoginState.WrongCredentials -> {
+                    Toast.makeText(activity, "Wrong credentials!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         binding.signUpText.setOnClickListener {
