@@ -19,7 +19,6 @@ class ApiClient(
         val tokenProvider: () -> String
 ) {
 
-    //val mapper = jacksonObjectMapper()
     val mapper: JsonMapper = JsonMapper.builder().findAndAddModules().build()
 
     suspend inline fun <reified T> fetch(
