@@ -9,9 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.localove.api.user.Gender
+import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.localove.R
 import ru.nsu.localove.databinding.FragmentNearbyUsersBinding
 
+//@AndroidEntryPoint
 class NearbyUsersFragment : Fragment() {
 
     private val nearbyUsersViewModel: NearbyUsersViewModel by viewModels()
@@ -23,7 +26,20 @@ class NearbyUsersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentNearbyUsersBinding.inflate(inflater, container, false)
+        binding = FragmentNearbyUsersBinding.inflate(inflater, container, false)
+
+        val profileCardAdapter = ProfileCardAdapter(List(50) {
+                    ProfileCardWithPhoto(
+                        id = 0,
+                        age = 0,
+                        name = "",
+                        gender = Gender.FEMALE,
+                        avatar = ByteArray(0),
+                        status = ""
+                    )
+        }) {}
+
+        binding.nearbyUsersRecyclerView.adapter = profileCardAdapter
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -37,9 +53,6 @@ class NearbyUsersFragment : Fragment() {
             appBarConfiguration
         )
 
-        nearbyUsersViewModel.text.observe(viewLifecycleOwner, {
-            binding.tmpText.text = it
-        })
         return binding.root
 
     }
