@@ -3,65 +3,37 @@ package ru.nsu.localove.security.registration
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.nsu.localove.api.ApiClient
 
 class RegistrationViewModel @ViewModelInject constructor(
-    private val repository: RegistrationRepository
+    private val repository: RegistrationRepository,
+    private val apiClient: ApiClient
 ) : ViewModel() {
-    val userInfo = MutableLiveData<UserInfo>().apply {
-        value = UserInfo()
-    }
-
     val readyToRegister = MutableLiveData<Boolean>().apply {
         value = false
     }
 
-    val testHiltString = repository.testHiltString
-
     fun onDataChanged(userInfo: UserInfo): RegistrationState {
-        var allFieldsFilled = true
-        val onNullCallback = {
-            allFieldsFilled = false
-        }
-
+        var readyToRegisterLocal = false
         return when {
-            !validateProperty(
-                userInfo.email,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.InvalidEmail
-            !validateProperty(
-                userInfo.login,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.InvalidLogin
-            !validateProperty(
-                userInfo.password,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.InvalidPassword
-            !validateProperty(
-                userInfo.passwordConfirmation,
-                { true },
-                onNullCallback
-            ) -> RegistrationState.UnequalPasswords
-            else -> RegistrationState.Valid
+            !validateEmail(userInfo.email) -> RegistrationState.InvalidEmail
+            !validateLogin(userInfo.login) -> RegistrationState.InvalidLogin
+            !validatePassword(userInfo.password) -> RegistrationState.InvalidPassword
+            !validateName(userInfo.name) -> RegistrationState.InvalidPassword
+            userInfo.password != userInfo.passwordConfirmation -> RegistrationState.UnequalPasswords
+            else -> {
+                readyToRegisterLocal = true
+                RegistrationState.Valid
+            }
         }.also {
-            readyToRegister.value = allFieldsFilled
+            readyToRegister.value = readyToRegisterLocal
         }
     }
 
     fun register(userInfo: UserInfo): RegistrationState = TODO()
 
-    private fun <T> validateProperty(
-        property: T?,
-        validator: (T) -> Boolean,
-        onNullCallback: () -> Unit
-    ): Boolean {
-        return property?.let {
-            validator(it)
-        } ?: let {
-            onNullCallback()
-            true
-        }
+    private fun UserInfo.isReadyToRegister(): Boolean {
+        return email != null && login != null && password != null
+                && name != null && gender != null && birthDate != null
     }
 }
