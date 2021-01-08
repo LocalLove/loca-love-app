@@ -4,17 +4,27 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.localove.api.user.ProfileCard
+import kotlinx.coroutines.launch
 
 class NearbyUsersViewModel @ViewModelInject constructor(
         private val repository: NearbyUsersRepository
 ) : ViewModel() {
 
-    private val _nearbyUsers = MutableLiveData<List<ProfileCardWithPhoto>>().apply {
-        value = listOf()
-    }
-    val nearbyUsers: LiveData<List<ProfileCardWithPhoto>> = _nearbyUsers
+    val nearbyUsers : LiveData<MutableList<ProfileCard>> = MutableLiveData(mutableListOf())
 
     fun refreshNearbyUsers() {
-        _nearbyUsers.value = repository.getNearbyUsers()
+        nearbyUsers.value?.clear()
+        viewModelScope.launch {
+            val nearbyUsersIds = repository.getNearbyUsersIds()
+            for (userId in nearbyUsersIds) {
+                val userCardState = repository.fetchUserCard(userId)
+                if (userCardState is UserCardState.Valid) {
+                    nearbyUsers.value?.add(userCardState.userCard)
+                }
+            }
+        }
     }
+
 }

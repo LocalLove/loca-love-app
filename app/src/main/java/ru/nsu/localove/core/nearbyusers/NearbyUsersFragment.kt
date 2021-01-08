@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,8 +14,10 @@ import com.localove.api.user.Gender
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.localove.R
 import ru.nsu.localove.databinding.FragmentNearbyUsersBinding
+import ru.nsu.localove.security.login.LoginFragmentDirections
+import ru.nsu.localove.security.login.LoginState
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class NearbyUsersFragment : Fragment() {
 
     private val nearbyUsersViewModel: NearbyUsersViewModel by viewModels()
@@ -26,20 +29,15 @@ class NearbyUsersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentNearbyUsersBinding.inflate(inflater, container, false)
 
-        val profileCardAdapter = ProfileCardAdapter(List(50) {
-                    ProfileCardWithPhoto(
-                        id = 0,
-                        age = 0,
-                        name = "",
-                        gender = Gender.FEMALE,
-                        avatar = ByteArray(0),
-                        status = ""
-                    )
-        }) {}
-
+        val profileCardAdapter = ProfileCardAdapter {}
         binding.nearbyUsersRecyclerView.adapter = profileCardAdapter
+        nearbyUsersViewModel.nearbyUsers.observe(viewLifecycleOwner) {
+            profileCardAdapter.dataSet = it
+            profileCardAdapter.notifyDataSetChanged()
+        }
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -48,6 +46,7 @@ class NearbyUsersFragment : Fragment() {
                 R.id.navigation_profile
             )
         )
+
         binding.toolbarNearbyUsers.setupWithNavController(
             findNavController(),
             appBarConfiguration
@@ -55,5 +54,9 @@ class NearbyUsersFragment : Fragment() {
 
         return binding.root
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        nearbyUsersViewModel.refreshNearbyUsers()
     }
 }

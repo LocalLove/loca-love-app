@@ -3,20 +3,25 @@ package ru.nsu.localove.core.nearbyusers
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.localove.api.user.ProfileCard
 import ru.nsu.localove.R
 
 class ProfileCardAdapter(
-        private val dataSet: List<ProfileCardWithPhoto>,
-        private val onClick: (ProfileCardWithPhoto) -> Unit
+    private val onClick: (ProfileCard) -> Unit
 ) : RecyclerView.Adapter<ProfileCardAdapter.ProfileCardHolder>() {
+
+    var dataSet: MutableList<ProfileCard> = mutableListOf()
 
     class ProfileCardHolder(
             view: View,
-            val onClick: (ProfileCardWithPhoto) -> Unit
+            val onClick: (ProfileCard) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
-        private var currentProfileCard: ProfileCardWithPhoto? = null
+        private var currentProfileCard: ProfileCard? = null
+        private val cardTitleView: TextView = view.findViewById(R.id.cardTitle)
+        private val cardStatusView: TextView = view.findViewById(R.id.cardStatus)
 
         init {
             view.setOnClickListener {
@@ -26,9 +31,10 @@ class ProfileCardAdapter(
             }
         }
 
-        fun bind(profileCard: ProfileCardWithPhoto) {
+        fun bind(profileCard: ProfileCard) {
             currentProfileCard = profileCard
-            // TODO: туду
+            cardTitleView.text = "${profileCard.name}, ${profileCard.age}"
+            cardStatusView.text = profileCard.status
         }
     }
 

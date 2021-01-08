@@ -2,53 +2,29 @@ package ru.nsu.localove.core.nearbyusers
 
 import com.localove.api.user.Gender
 import com.localove.api.user.ProfileCard
+import ru.nsu.localove.api.ApiClient
+import ru.nsu.localove.api.get
 import javax.inject.Inject
 
-class NearbyUsersRepository @Inject constructor() {
+class NearbyUsersRepository @Inject constructor(
+        private val apiClient: ApiClient
+) {
 
-    fun getNearbyUsers(): List<ProfileCardWithPhoto> {
-        val nearbyUsersIds = getNearbyUsersIds()
-        val profileCards = nearbyUsersIds.map { fetchUser(it) }
-        val avatars = profileCards.map { fetchAvatar(it.avatarId) }
-        return profileCards.zip(avatars).map { (profileCard, avatar) ->
-            ProfileCardWithPhoto(
-                    id = profileCard.id,
-                    age = profileCard.age,
-                    name = profileCard.name,
-                    gender = profileCard.gender,
-                    avatar = avatar,
-                    status = profileCard.status
-            )
-        }
-    }
+    suspend fun fetchUserCard(userId: Long): UserCardState =
+            apiClient.get<ProfileCard>(path = "/user/${userId}/card", withAuth = true)
+                    .transform(onSuccess = {
+                        UserCardState.Valid(it)
+                    }, onError = { UserCardState.NotFound })
 
-    private fun fetchUser(userId: Long): ProfileCard {
-        return ProfileCard(
-                id = 42,
-                age = 18,
-                name = "Ivan",
-                gender = Gender.FEMALE,
-                avatarId = 0,
-                status = "Status......."
-        )
-    }
+    suspend fun fetchAvatar(pictureId: Long): PictureState =
+            apiClient.get<ByteArray>(path = "/pictures/${pictureId}", withAuth = true)
+                    .transform(onSuccess = {
+                        // TODO: пока так, потом применить как-нибудь знание о типе изображения
+                        PictureState.Valid(it)
+                    }, onError = { PictureState.NotFound })
 
-
-    private fun fetchAvatar(pictureId: Long): ByteArray {
-        return ByteArray(0)
-    }
-
-    private fun getNearbyUsersIds(): List<Long> {
+    fun getNearbyUsersIds(): List<Long> {
         // WiFi-Direct logic
         return List(50) {42}
     }
 }
-
-class ProfileCardWithPhoto(
-    val id: Long,
-    val age: Int,
-    val name: String,
-    val gender: Gender,
-    val avatar: ByteArray,
-    val status: String?
-)
