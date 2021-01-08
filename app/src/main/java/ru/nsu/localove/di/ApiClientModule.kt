@@ -20,6 +20,6 @@ class ApiClientModule {
 
     @Provides
     fun provideBaseUrl(): String {
-        return "http://192.168.0.104:8080"
+        return "http://10.0.2.2:8080"
     }
 }
