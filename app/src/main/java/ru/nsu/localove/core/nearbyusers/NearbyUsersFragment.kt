@@ -4,18 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.localove.api.user.Gender
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.localove.R
 import ru.nsu.localove.databinding.FragmentNearbyUsersBinding
-import ru.nsu.localove.security.login.LoginFragmentDirections
-import ru.nsu.localove.security.login.LoginState
 
 @AndroidEntryPoint
 class NearbyUsersFragment : Fragment() {
@@ -32,10 +28,18 @@ class NearbyUsersFragment : Fragment() {
 
         binding = FragmentNearbyUsersBinding.inflate(inflater, container, false)
 
-        val profileCardAdapter = ProfileCardAdapter {}
+        val profileCardAdapter = ProfileCardAdapter {
+            // TODO: zdes' navigaciya na ekran profilya polzovatelya
+        }
         binding.nearbyUsersRecyclerView.adapter = profileCardAdapter
+
         nearbyUsersViewModel.nearbyUsers.observe(viewLifecycleOwner) {
             profileCardAdapter.dataSet = it
+            profileCardAdapter.notifyDataSetChanged()
+        }
+
+        nearbyUsersViewModel.idToAvatarMap.observe(viewLifecycleOwner) {
+            profileCardAdapter.idToAvatarBytesMap = it
             profileCardAdapter.notifyDataSetChanged()
         }
 

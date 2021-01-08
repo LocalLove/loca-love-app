@@ -19,7 +19,6 @@ class NearbyUsersRepository @Inject constructor(
     suspend fun fetchAvatar(pictureId: Long): PictureState =
             apiClient.get<ByteArray>(path = "/pictures/${pictureId}", withAuth = true)
                     .transform(onSuccess = {
-                        // TODO: пока так, потом применить как-нибудь знание о типе изображения
                         PictureState.Valid(it)
                     }, onError = { PictureState.NotFound })
 
