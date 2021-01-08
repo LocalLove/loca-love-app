@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.localove.R
 import ru.nsu.localove.databinding.ActivityBottomNavBinding
 
+@AndroidEntryPoint
 class BottomNavActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBottomNavBinding

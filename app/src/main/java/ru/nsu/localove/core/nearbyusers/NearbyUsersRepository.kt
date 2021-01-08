@@ -25,6 +25,6 @@ class NearbyUsersRepository @Inject constructor(
 
     fun getNearbyUsersIds(): List<Long> {
         // WiFi-Direct logic
-        return List(50) {42}
+        return List(50) {5}
     }
 }
