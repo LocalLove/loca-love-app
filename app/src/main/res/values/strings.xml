@@ -24,5 +24,4 @@
     <string name="signUpButtonText">Sign Up</string>
     <string name="genderMaleRadioButtonText">Male</string>
     <string name="genderFemaleRadioButtonText">Female</string>
-    <string name="registration_title">Регистрация</string>
 </resources>
