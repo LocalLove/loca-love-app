@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.localove.R
 import ru.nsu.localove.databinding.FragmentNearbyUsersBinding
 
+@AndroidEntryPoint
 class NearbyUsersFragment : Fragment() {
 
     private val nearbyUsersViewModel: NearbyUsersViewModel by viewModels()
@@ -23,7 +25,23 @@ class NearbyUsersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentNearbyUsersBinding.inflate(inflater, container, false)
+
+        binding = FragmentNearbyUsersBinding.inflate(inflater, container, false)
+
+        val profileCardAdapter = ProfileCardAdapter {
+            // TODO: zdes' navigaciya na ekran profilya polzovatelya
+        }
+        binding.nearbyUsersRecyclerView.adapter = profileCardAdapter
+
+        nearbyUsersViewModel.nearbyUsers.observe(viewLifecycleOwner) {
+            profileCardAdapter.dataSet = it
+            profileCardAdapter.notifyDataSetChanged()
+        }
+
+        nearbyUsersViewModel.idToAvatarMap.observe(viewLifecycleOwner) {
+            profileCardAdapter.idToAvatarBytesMap = it
+            profileCardAdapter.notifyDataSetChanged()
+        }
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -32,15 +50,17 @@ class NearbyUsersFragment : Fragment() {
                 R.id.navigation_profile
             )
         )
+
         binding.toolbarNearbyUsers.setupWithNavController(
             findNavController(),
             appBarConfiguration
         )
 
-        nearbyUsersViewModel.text.observe(viewLifecycleOwner, {
-            binding.tmpText.text = it
-        })
         return binding.root
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        nearbyUsersViewModel.refreshNearbyUsers()
     }
 }
