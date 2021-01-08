@@ -5,5 +5,5 @@ sealed class RegistrationState {
     object InvalidEmail : RegistrationState()
     object InvalidLogin : RegistrationState()
     object UnequalPasswords : RegistrationState()
-    object InvalidPassword : RegistrationState()
+    object  InvalidPassword : RegistrationState()
 }
