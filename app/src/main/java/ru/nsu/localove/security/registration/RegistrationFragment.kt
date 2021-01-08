@@ -3,6 +3,7 @@ package ru.nsu.localove.security.registration
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,8 +47,9 @@ class RegistrationFragment : Fragment() {
         }
         binding.registrationBirthDateTextInput.setOnClickListener {
             val calendarListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                UserInfo(birthDate = LocalDate.of(year, month + 1, day))
-                binding.registrationBirthDateTextInput.setText("$day-${month + 1}-$year")
+                val date = LocalDate.of(year, month + 1, day)
+                UserInfo(birthDate = date)
+                binding.registrationBirthDateTextInput.setText(date.toString())
             }
             showDatePickerDialog(calendarListener)
         }
@@ -68,6 +70,10 @@ class RegistrationFragment : Fragment() {
         return binding.root
     }
 
+    private fun onViewUpdate() {
+        registrationViewModel
+    }
+
     private fun showDatePickerDialog(listener: DatePickerDialog.OnDateSetListener) {
         val now = Calendar.getInstance()
         DatePickerDialog(
@@ -83,9 +89,12 @@ class RegistrationFragment : Fragment() {
         createUserInfo: (String) -> UserInfo
     ) {
         afterTextChanged {
-            registrationViewModel.onDataChanged(
-                createUserInfo(it)
-            )
+            when(registrationViewModel.onDataChanged(createUserInfo(it))) {
+                is RegistrationState.UnequalPasswords -> binding.registrationPasswordConfirmationTextInputLayout.setError("Error")
+                is RegistrationState.Valid -> {
+                    Log.d("REGISTRATION", "valid:${registrationViewModel.userInfo}")
+                }
+            }
         }
     }
 }

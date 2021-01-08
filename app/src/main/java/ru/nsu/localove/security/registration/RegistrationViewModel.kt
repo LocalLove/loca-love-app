@@ -9,20 +9,24 @@ class RegistrationViewModel @ViewModelInject constructor(
     private val repository: RegistrationRepository,
     private val apiClient: ApiClient
 ) : ViewModel() {
+    val userInfo: UserInfo = UserInfo()
+
     val readyToRegister = MutableLiveData<Boolean>().apply {
         value = false
     }
 
-    fun onDataChanged(userInfo: UserInfo): RegistrationState {
+    fun onDataChanged(userInfoMask: UserInfo): RegistrationState {
         var readyToRegisterLocal = false
         return when {
-            !validateEmail(userInfo.email) -> RegistrationState.InvalidEmail
-            !validateLogin(userInfo.login) -> RegistrationState.InvalidLogin
-            !validatePassword(userInfo.password) -> RegistrationState.InvalidPassword
-            !validateName(userInfo.name) -> RegistrationState.InvalidPassword
-            userInfo.password != userInfo.passwordConfirmation -> RegistrationState.UnequalPasswords
+            !validateEmail(userInfoMask.email) -> RegistrationState.InvalidEmail
+            !validateLogin(userInfoMask.login) -> RegistrationState.InvalidLogin
+            !validatePassword(userInfoMask.password) -> RegistrationState.InvalidPassword
+            !validateName(userInfoMask.name) -> RegistrationState.InvalidPassword
+            userInfoMask.password != userInfoMask.passwordConfirmation -> RegistrationState.UnequalPasswords
             else -> {
-                readyToRegisterLocal = true
+                readyToRegisterLocal = userInfo
+                    .merge(userInfoMask)
+                    .isReadyToRegister()
                 RegistrationState.Valid
             }
         }.also {
@@ -36,4 +40,16 @@ class RegistrationViewModel @ViewModelInject constructor(
         return email != null && login != null && password != null
                 && name != null && gender != null && birthDate != null
     }
+
+    private fun UserInfo.merge(other: UserInfo): UserInfo {
+        return this.apply {
+            other.email?.let { email = it }
+            other.login?.let { email = it }
+            other.password?.let { email = it }
+            other.name?.let { email = it }
+            other.gender?.let { gender = it }
+            other.birthDate?.let { birthDate = it }
+        }
+    }
+
 }
