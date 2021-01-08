@@ -25,7 +25,7 @@ class LoginViewModel @ViewModelInject constructor(
         }
 
         viewModelScope.launch {
-            loginRepository.signIn(login, password)
+            loginState.value = loginRepository.signIn(login, password)
         }
     }
 }

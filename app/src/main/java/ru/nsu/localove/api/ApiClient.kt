@@ -15,11 +15,14 @@ import kotlin.text.Charsets.UTF_8
 const val AUTHORIZATION_HEADER = "Authorization"
 const val ACCESS_TOKEN_PREFIX = "Bearer "
 
-class ApiClient @KtorExperimentalAPI @Inject constructor(
-    val http: HttpClient = httpClient(),
-    val baseUrl: String = "localhost",
-    val tokenService: TokenService
+class ApiClient @Inject @KtorExperimentalAPI constructor(
+    val tokenService: TokenService,
 ) {
+
+    val http = httpClient()
+
+    //Локалхост не работает, так как он применяется к самому телефону
+    val baseUrl = "http://10.0.2.2:8080"
 
     val mapper: JsonMapper = JsonMapper.builder().findAndAddModules().build()
 
