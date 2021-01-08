@@ -32,7 +32,7 @@
         tools:text="Login" />
 
     <EditText
-        android:id="@+id/passwordTextEdit"
+        android:id="@+id/registrationPasswordTextInputLayout"
         android:layout_width="328dp"
         android:layout_height="56dp"
         android:layout_marginTop="32dp"
@@ -55,7 +55,7 @@
         app:iconPadding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/registrationPasswordTextInputLayout" />
 
     <LinearLayout
         android:layout_width="wrap_content"

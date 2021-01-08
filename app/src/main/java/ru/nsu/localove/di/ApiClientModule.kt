@@ -3,26 +3,23 @@ package ru.nsu.localove.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import io.ktor.client.*
 import io.ktor.util.*
 import ru.nsu.localove.api.httpClient
-import ru.nsu.localove.security.MainActivity
-import javax.inject.Singleton
 
 @Module
-@InstallIn(value = [MainActivity::class])
-object ApiClientModule {
+@InstallIn(value = [ActivityComponent::class])
+class ApiClientModule {
 
     @KtorExperimentalAPI
-    @Singleton
     @Provides
     fun provideHttpClient(): HttpClient {
         return httpClient()
     }
 
-    @Singleton
     @Provides
     fun provideBaseUrl(): String {
-        return "192.168.2.100"
+        return "localhost"
     }
 }
