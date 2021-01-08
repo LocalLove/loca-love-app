@@ -17,7 +17,7 @@ const val ACCESS_TOKEN_PREFIX = "Bearer "
 
 class ApiClient @KtorExperimentalAPI @Inject constructor(
     val http: HttpClient = httpClient(),
-    val baseUrl: String = "localhost",
+    val baseUrl: String,
     val tokenService: TokenService
 ) {
 

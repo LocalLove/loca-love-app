@@ -9,11 +9,11 @@ sealed class HttpResponse<T> {
     data class Error<T>(val error: ErrorDto): HttpResponse<T>()
 
     fun <R> transform(
-            onSuccess: (T) -> R,
-            onConflict: (ErrorDto) -> R
+        onSuccess: (T) -> R,
+        onError: (ErrorDto) -> R
     ): R = when(this) {
         is Success -> onSuccess(data)
-        is Error -> onConflict(error)
+        is Error -> onError(error)
     }
 }
 
@@ -27,10 +27,10 @@ sealed class UnitHttpResponse {
     data class Error(val error: ErrorDto): UnitHttpResponse()
 
     fun <R> transform(
-            onSuccess: () -> R,
-            onConflict: (ErrorDto) -> R
+        onSuccess: () -> R,
+        onError: (ErrorDto) -> R
     ): R = when(this) {
         is Success -> onSuccess()
-        is Error -> onConflict(error)
+        is Error -> onError(error)
     }
 }
