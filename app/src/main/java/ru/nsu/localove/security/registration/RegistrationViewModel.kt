@@ -3,38 +3,43 @@ package ru.nsu.localove.security.registration
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.nsu.localove.api.ApiClient
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class RegistrationViewModel @ViewModelInject constructor(
     private val repository: RegistrationRepository,
-    private val apiClient: ApiClient
 ) : ViewModel() {
     val userInfo: UserInfo = UserInfo()
+
+    val registrationState = MutableLiveData<RegistrationState?>()
 
     val readyToRegister = MutableLiveData<Boolean>().apply {
         value = false
     }
 
-    fun onDataChanged(userInfoMask: UserInfo): RegistrationState {
+    fun onDataChanged(userInfoMask: UserInfo): RegistrationFormState {
         var readyToRegisterLocal = false
         return when {
-            !validateEmail(userInfoMask.email) -> RegistrationState.InvalidEmail
-            !validateLogin(userInfoMask.login) -> RegistrationState.InvalidLogin
-            !validatePassword(userInfoMask.password) -> RegistrationState.InvalidPassword
-            !validateName(userInfoMask.name) -> RegistrationState.InvalidPassword
-            userInfoMask.password != userInfoMask.passwordConfirmation -> RegistrationState.UnequalPasswords
+            !validateEmail(userInfoMask.email) -> RegistrationFormState.InvalidEmail
+            !validateLogin(userInfoMask.login) -> RegistrationFormState.InvalidLogin
+            !validatePassword(userInfoMask.password) -> RegistrationFormState.InvalidPassword
+            !validateName(userInfoMask.name) -> RegistrationFormState.InvalidName
             else -> {
                 readyToRegisterLocal = userInfo
                     .merge(userInfoMask)
                     .isReadyToRegister()
-                RegistrationState.Valid
+                RegistrationFormState.Valid
             }
         }.also {
             readyToRegister.value = readyToRegisterLocal
         }
     }
 
-    fun register(userInfo: UserInfo): RegistrationState = TODO()
+    fun register() {
+        viewModelScope.launch {
+            registrationState.value = repository.signUp(userInfo)
+        }
+    }
 
     private fun UserInfo.isReadyToRegister(): Boolean {
         return email != null && login != null && password != null
@@ -44,9 +49,9 @@ class RegistrationViewModel @ViewModelInject constructor(
     private fun UserInfo.merge(other: UserInfo): UserInfo {
         return this.apply {
             other.email?.let { email = it }
-            other.login?.let { email = it }
-            other.password?.let { email = it }
-            other.name?.let { email = it }
+            other.login?.let { login = it }
+            other.password?.let { password = it }
+            other.name?.let { name = it }
             other.gender?.let { gender = it }
             other.birthDate?.let { birthDate = it }
         }

@@ -23,7 +23,11 @@
     <fragment
         android:id="@+id/registrationFirst"
         android:name="ru.nsu.localove.security.registration.RegistrationFragment"
-        android:label="RegistrationFirst" />
+        android:label="RegistrationFirst" >
+        <action
+            android:id="@+id/action_registrationFirst_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/passwordRestoreFragment"
         android:name="ru.nsu.localove.security.restore.PasswordRestoreFragment"
