@@ -1,13 +1,21 @@
 package ru.nsu.localove.core.profile
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.localove.api.user.Profile
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel @ViewModelInject constructor(
+    @Assisted savedStateHandle: SavedStateHandle,
+    private val profileRepository: ProfileRepository
+) : ViewModel() {
 
-    private val _userName = MutableLiveData<String>().apply {
-        value = "ShSerg0699"
+    val user: LiveData<Profile> = liveData {
+        emit(profileRepository.getProfile())
     }
-    val userName: LiveData<String> = _userName
+
+
 }

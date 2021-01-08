@@ -24,4 +24,5 @@
     <string name="signUpButtonText">Sign Up</string>
     <string name="genderMaleRadioButtonText">Male</string>
     <string name="genderFemaleRadioButtonText">Female</string>
+    <string name="profile_picture">Profile picture</string>
 </resources>
