@@ -5,4 +5,5 @@
     <dimen name="security_labels_margin_top">56dp</dimen>
     <dimen name="input_default_height">56dp</dimen>
     <dimen name="input_default_width">328dp</dimen>
+    <dimen name="profileImage">368dp</dimen>
 </resources>
